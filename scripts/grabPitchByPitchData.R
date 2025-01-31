@@ -3,9 +3,9 @@ library(baseballr)
 library(httr)
 
 # Set variables for the season to scrape and the start and end date for that season
-season <- 2020
-season_start_date <- '2020-07-23'
-season_end_date <- '2020-09-27'
+season <- 2014
+season_start_date <- '2014-03-22'
+season_end_date <- '2014-09-28'
 
 # Function to grab CSV pitch-by-pitch data from baseball savant and save them into temporary files
 getStatcastPitchByPitch <- function(date_in, date_out) {
