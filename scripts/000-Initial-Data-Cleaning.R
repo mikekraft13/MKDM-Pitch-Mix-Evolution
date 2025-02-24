@@ -3,7 +3,7 @@ library(here)
 source(here::here("scripts","Libraries.R"))
 
 # If the raw data needs to be loaded back in ####
-read_raw_savant_rds_data <- FALSE
+read_raw_savant_rds_data <- T
 if(read_raw_savant_rds_data){source(here::here('scripts', 'Load-RDS-Files.R'))}
 
 # Cleaning dataframes by year, dropping unnecessary columns ####
@@ -14,7 +14,7 @@ df_list <- list(savant_pbp2014, savant_pbp2015, savant_pbp2016, savant_pbp2017, 
 
 ## Cleaning individual datasets ####
 filtered_dfs <- map(df_list, ~ .x |>
-  filter(!is.na(pitch_type)) |>
+  filter(!is.na(pitch_type) & pitch_type != '') |>
   select(-any_of(c("spin_rate_deprecated", "break_angle_deprecated", "break_length_deprecated", "game_type",
   "game_year", "tfs_deprecated", "tfs_zulu_deprecated", "umpire", "sv_id", "vx0", "vy0", "vz0", 
   "ax", "ay", "az", "fielder2", "fielder3", "fielder4", "fielder5", "fielder6", "fielder7","fielder8",
