@@ -26,7 +26,8 @@ yearly_pitch_metrics <- filtered_dfs_binded %>%
   ungroup() %>%
   filter(!pitch_type %in% c('AB', 'EP', 'FO', 'IN', 'KN', 'FA', 'PO', 'SC', 'CS', 'SV'))
 
-# Loop through platoons and save plots
+# Loop through platoons and save plots ####
+## Usage Evolution ####
 lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
   lapply(unique(yearly_pitch_metrics$stand), function(bat) {
     plot <- yearly_pitch_metrics %>%
@@ -45,7 +46,7 @@ lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
   })
 })
 
-# Strike Zone Visualization with heat map
+## Strike Zone Visualization with heat map ####
 lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
   lapply(unique(yearly_pitch_metrics$stand), function(bat) {
     lapply(unique(yearly_pitch_metrics$pitch_name), function(pitch) {
@@ -90,5 +91,66 @@ lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
       
       ggsave(paste0('plots/Location-Trends-', pitch, '-', throw, 'HP-vs-', bat, 'HH', '.png'), plot = plot)
     })
+  })
+})
+
+## Movement Plot (Similar to Baseball Savant) (Work on this one?) ####
+lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
+  lapply(unique(yearly_pitch_metrics$stand), function(bat) {
+    lapply(unique(yearly_pitch_metrics$pitch_name), function(pitch) {
+      df <- yearly_pitch_metrics %>%
+        filter(p_throws == throw & stand == bat & pitch_name == pitch) %>%
+        mutate(year = as.numeric(year))
+      
+      plot <- df %>%
+        ggplot(aes(pfx_x, pfx_z, color = year)) +
+        geom_point(size = 3) +
+        scale_color_viridis_c(option = 'plasma') +
+        labs(
+          title = paste0(pitch, ' Movement Evolution ', throw, 'HP-vs-', bat, 'HH'),
+          x = 'Horizontal Movement', 
+          y = 'Vertical Movement'
+        ) +
+        xlim(-2, 2) +
+        ylim(-2, 2) +
+        coord_fixed() +
+        theme_minimal() +
+        theme(
+          panel.background = element_rect(fill = "white", color = NA),
+          panel.grid = element_blank(),
+          plot.background = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.border = element_blank()
+        ) +
+        annotate("path",
+                 x = 2 * cos(seq(0, 2 * pi, length.out = 100)),
+                 y = 2 * sin(seq(0, 2 * pi, length.out = 100)),
+                 color = "black",
+                 linewidth = 1) +
+        geom_vline(xintercept = 0, linetype = "dotted", color = "black") + 
+        geom_hline(yintercept = 0, linetype = "dotted", color = "black") 
+      
+      ggsave(paste0('plots/Movement-Trends-', pitch, '-', throw, 'HP-vs-', bat, 'HH', '.png'), plot = plot)
+    })
+  })
+})
+
+## Exit Velo Evolution ####
+lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
+  lapply(unique(yearly_pitch_metrics$stand), function(bat) {
+    plot <- yearly_pitch_metrics %>%
+      filter(p_throws == throw & stand == bat & !is.na(launch_speed)) %>%
+      ggplot(aes(x = year, y = launch_speed, color = pitch_name, group = pitch_name)) +
+      geom_point(size = 3) +
+      geom_line(size = 1) +
+      labs(
+        title = paste0(throw, 'HP vs. ', bat, 'HH Exit Velocity'),
+        x = 'Year',
+        y = 'Exit Velocity',
+        color = 'Pitch Type'
+      )
+    
+    ggsave(paste0('plots/Exit-Velocity-Trends-', throw, 'HP-vs-', bat, 'HH', '.png'), plot = plot)
   })
 })
