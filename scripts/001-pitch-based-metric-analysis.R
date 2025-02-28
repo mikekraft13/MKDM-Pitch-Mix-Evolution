@@ -26,6 +26,29 @@ yearly_pitch_metrics <- filtered_dfs_binded %>%
   ungroup() %>%
   filter(!pitch_type %in% c('AB', 'EP', 'FO', 'IN', 'KN', 'FA', 'PO', 'SC', 'CS', 'SV'))
 
+plot <- yearly_pitch_metrics %>%
+  mutate(
+    p_throws = ifelse(p_throws == 'L', 'LHP', 'RHP'),
+    stand = ifelse(stand == 'L', 'LHH', 'RHH'),
+  ) %>%
+  ggplot(aes(x = year, y = usage, shape = pitch_name, color = release_speed, group = pitch_name)) +
+  geom_point(size = 3) +
+  geom_line(size = 1) +
+  scale_shape_manual(values = c(0, 1, 2, 9, 4, 5, 6, 7, 8)) +
+  labs(
+    title = paste0('Pitch Usage and Velocity Trends'),
+    x = 'Year',
+    y = 'Usage %',
+    color = 'Velocity (MPH)',
+    shape = 'Pitch'
+  ) +
+  facet_grid(
+    cols = vars(p_throws),
+    rows = vars(stand)
+  )
+
+ggsave('plots/Usage-Velocity-Trends.png', plot = plot)
+
 # Loop through platoons and save plots ####
 ## Usage Evolution ####
 lapply(unique(yearly_pitch_metrics$p_throws), function(throw) {
