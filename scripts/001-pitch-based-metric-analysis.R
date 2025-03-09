@@ -31,10 +31,9 @@ plot <- yearly_pitch_metrics %>%
     p_throws = ifelse(p_throws == 'L', 'LHP', 'RHP'),
     stand = ifelse(stand == 'L', 'LHH', 'RHH'),
   ) %>%
-  ggplot(aes(x = year, y = usage, shape = pitch_name, color = release_speed, group = pitch_name)) +
+  ggplot(aes(x = year, y = usage, color = pitch_name, group = pitch_name)) +
   geom_point(size = 3) +
   geom_line(size = 1) +
-  scale_shape_manual(values = c(0, 1, 2, 9, 4, 5, 6, 7, 8)) +
   labs(
     title = paste0('Pitch Usage and Velocity Trends'),
     x = 'Year',
@@ -45,9 +44,25 @@ plot <- yearly_pitch_metrics %>%
   facet_grid(
     cols = vars(p_throws),
     rows = vars(stand)
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  scale_color_manual(
+    values = c(
+      '4-Seam Fastball' = '#FF1A1C',
+      'Changeup' = '#0DA01A',
+      'Curveball' = '#377EB8',
+      'Cutter' = '#B63653',
+      'Knuckle Curve' = '#5B0FD8',
+      'Sinker' = '#8A4513',
+      'Slider' = '#9840E2',
+      'Split-Finger' = '#9FF04D',
+      'Sweeper' = '#A91FA5'
+    )
   )
 
-ggsave('plots/Usage-Velocity-Trends.png', plot = plot)
+ggsave('plots/Usage-Velocity-Trends.png', plot = plot, width = 8)
 
 # Loop through platoons and save plots ####
 ## Usage Evolution ####
