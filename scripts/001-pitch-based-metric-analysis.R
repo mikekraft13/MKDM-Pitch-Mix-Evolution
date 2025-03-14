@@ -45,8 +45,10 @@ usage_plot <- yearly_pitch_metrics %>%
     cols = vars(p_throws),
     rows = vars(stand)
   ) +
+  theme_dark() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.background = element_rect(fill = 'gray75', color = NA)
   ) +
   scale_color_manual(
     values = c(
@@ -65,40 +67,35 @@ usage_plot <- yearly_pitch_metrics %>%
 # Save plot for usage ####
 ggsave('plots/Usage-Trends.png', plot = usage_plot, width = 8)
 
-# ASK MIKE ABOUT THIS
 # Create plot for pitch movement ####
 movement_plot <- yearly_pitch_metrics %>%
   mutate(
     p_throws = ifelse(p_throws == 'L', 'LHP', 'RHP'),
     stand = ifelse(stand == 'L', 'LHH', 'RHH'),
   ) %>%
-  ggplot(aes(x = -pfx_x, y = pfx_z, color = pitch_name, group = pitch_name)) +
-  geom_point(aes(size = year)) +
+  ggplot(aes(x = -pfx_x, y = pfx_z)) +
+  geom_point(aes(size = year, fill = pitch_name), shape = 21, colour = 'black', stroke = 1) +
   labs(
     title = paste0('Pitch Movement Evolution'),
-    x = 'Horizontal Movement',
-    y = 'Vertical Movement',
-    color = 'Pitch',
+    x = 'Horizontal Movement (Feet)',
+    y = 'Vertical Movement (Feet)',
+    fill = 'Pitch',
     size = 'Year'
   ) +
   xlim(-2, 2) +
   ylim(-2, 2) +
   coord_fixed() +
-  # theme(
-  #   # panel.background = element_rect(fill = "white", color = NA),
-  #   panel.grid = element_blank(),
-  #   # plot.background = element_blank(),
-  #   axis.text = element_blank(),
-  #   axis.ticks = element_blank(),
-  #   # panel.border = element_blank()
-  # ) +
-  annotate("path",
+  theme_dark() +
+  theme(
+    panel.background = element_rect(fill = 'gray75', color = NA)
+  ) +
+  annotate('path',
            x = 2 * cos(seq(0, 2 * pi, length.out = 100)),
            y = 2 * sin(seq(0, 2 * pi, length.out = 100)),
-           color = "black",
+           color = 'black',
            linewidth = 1) +
-  geom_vline(xintercept = 0, linetype = "dotted", color = "black") +
-  geom_hline(yintercept = 0, linetype = "dotted", color = "black") +
+  geom_vline(xintercept = 0, linetype = 'dotted', color = 'black') +
+  geom_hline(yintercept = 0, linetype = 'dotted', color = 'black') +
   facet_grid(
     cols = vars(p_throws),
     rows = vars(stand)
