@@ -74,7 +74,7 @@ movement_plot <- yearly_pitch_metrics %>%
     stand = ifelse(stand == 'L', 'LHH', 'RHH'),
   ) %>%
   ggplot(aes(x = -pfx_x, y = pfx_z)) +
-  geom_point(aes(size = year, fill = pitch_name), shape = 21, colour = 'black', stroke = 1) +
+  geom_point(aes(size = year, fill = pitch_name), shape = 21, colour = 'black', stroke = 0.5) +
   labs(
     title = paste0('Pitch Movement Evolution'),
     x = 'Horizontal Movement (Feet)',
@@ -100,7 +100,7 @@ movement_plot <- yearly_pitch_metrics %>%
     cols = vars(p_throws),
     rows = vars(stand)
   ) +
-  scale_color_manual(
+  scale_fill_manual(
     values = c(
       '4-Seam Fastball' = '#FF1A1C',
       'Changeup' = '#0DA01A',
@@ -112,6 +112,9 @@ movement_plot <- yearly_pitch_metrics %>%
       'Split-Finger' = '#9FF04D',
       'Sweeper' = '#A91FA5'
     )
+  ) +
+  guides(
+    fill = guide_legend(override.aes = list(size = 5))
   )
 
 # Save plot for movement ####

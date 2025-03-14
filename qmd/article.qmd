@@ -12,6 +12,8 @@ format: html
 
 # INTRO few sentences here - MAKE SURE TO INTRODUCE DAN HERE
 
+This is a collaborative project between myself and Dan Mueller. Our goal here was to conduct a research project into baseball analytics in anticipation for attending the 2025 SABR analytics conference at Arizona State University.
+
 # Research question (included in the first intro paragraph):
 
 How Have Pitch Mixes and Their Effectiveness Evolved Over Time?
@@ -22,21 +24,33 @@ How Have Pitch Mixes and Their Effectiveness Evolved Over Time?
 
 # DATA EXTRACTION
 
-To begin the analysis on this topic, Dan wrote a webscraper found here (link to webscraper script on Github). This webscaper pulls in all pitch-by-pitch regular season data ranging from 2014 (beginning of the Statcast Era (link the Statcast Era to a wikipedia page or something)) all the way up to the end of the 2024 regular season. Each individual year's worth of data is saved down into its own separate RDS file. These data files are saved down as RDS files due to the fact that (fact check this please) RDS files are stored and processed more efficiently in the R programming language.
+To begin the analysis on this topic, Dan wrote a script (grabPitchByPitchData.R) utilizing Statcast's search and CSV download features to scrape pitch-by-pitch data ranging from 2014 (beginning of the Statcast Era (link the Statcast Era to a wikipedia page or something)) all the way up to the end of the 2024 regular season. Each individual year's worth of data is downloaded temporarily as a CSV, read in, then saved down again into its own RDS file. We chose to save these data files as RDS files due to the fact that (fact check this please) RDS files (with large amounts of data?) are stored and processed more efficiently in the R programming language.
 
-TALK A LITTLE BIT MORE ABOUT THE WEBSCRAPER????
-
-
-
-After receiving all of the data from the web, we begun our clean-up process found here (link to 000 script on Github). We first source our script that loads in all of our libraries found here (link to Libraries script on Github).  
+After receiving all of the data from the web, we begun our clean-up process found here (link to 000 script on Github). We first source our script that loads in all of our libraries found here (link to Libraries script on Github). (Mike finish this part)
 
 ---
 
 # FIRST ANALYSIS SECTION
 
+We first wanted to look into how usage of individual pitches has changed over the last decade. With the sweeper craze a few years back and the rise of sinkers and splitters last season, we hypothesized that MLB teams are continuously finding new pitches that are being under-utilized and pushing them to get an edge against the competition.
+
+(insert graph)
+
+In doing our research, we discovered that individual pitch trends differed based on platoons. For example, fastball usage has declined for pitchers facing same-handedness hitters much more as compared to opposite handedness. Additionally, pitchers facing same-handedness throw sinkers and sliders significantly more than any other non-fastball pitch. Within the lower percentages for same-handedness matchups, curveball usage has sharply declined in favor of sweepers and cutters, which have proven to be more effective at generating whiffs.
+
+On the opposite-handedness side. the 4-seam fastball has remained the most dominant pitch, with sinkers and sliders being less popular than they are against same-handedness hitters. In fact, sinkers specifically have seen a drastic decrease in opposite-handedness usage since 2014. Since 2019, changeups have become the second-most popular pitch thrown against opposite-handedness, followed closely by the slider and still-declining sinker.
+
+Looking to 2025, we believe the pitch to keep an eye on is the splitter. In each of the four graphs, there is a slight uptick in splitter usage in 2024. We expect that to continue as more and more players learn the pitch and it will be interesting to see how its effectiveness, and as a result usage, develops once hitters of both platoons see it more frequently.
+
 ---
 
 # SECOND ANALYSIS SECTION
+
+The next trend we wanted to investigate was movement, or pitch shapes. We chose to make a graph similar to that which you could find on a Baseball Savant page (insert link?) which shows movement from the pitcher's point of view staring at home plate.
+
+(insert graph)
+
+With the rise and fall of the effectiveness of certain pitches, we were curious if this was at all due to changes in the actual movement of the pitches. However, as shown from the graph, the majority of these pitches are clustered around the same point, and many outliers in pitches like the sweeper, for example, are mainly due to a low sample size of them being thrown in that year. Although we were disappointed that there was less infromation to draw from this portion of the analysis, it does make sense why this graph looks the way it does. For each of these data points, we were taking a league average across an entire year and the reality of a pitch's movement and success is much more nuanced than that, as there is significant influence from the pitcher's arm angle, release point, pronation versus supination, and more.
 
 ---
 
@@ -54,6 +68,8 @@ After receiving all of the data from the web, we begun our clean-up process foun
 
 # LIMITATIONS
 
+For the majority of our analysis, we were summarizing averages across the entire league over the course of one season. As a result, pitchers who dominated and pitchers who struggled in that given season were being lumped together, which might have made it more difficult to draw conclusions on which pitches, movements, etc. haven proven to be more successful over the years. In future iterations of this project, we would like to isolate the top 25 percent of pitchers each year from the rest of the group using a metric such as ERA or FIP, and see if they share a common deviation from the league average in any of these categories we investigated.
+
 ---
 
 # TAKEAWAYS
@@ -62,4 +78,6 @@ After receiving all of the data from the web, we begun our clean-up process foun
 
 # INCLUDE FINAL LINKS TO LINKEDIN, TWITTER, GITHUB, ETC
 
-![](../plots/Movement-Trends.png)
+Dan's LinkedIn: https://www.linkedin.com/in/daniel-j-mueller/
+Dan's GitHub: https://github.com/danjmue
+
