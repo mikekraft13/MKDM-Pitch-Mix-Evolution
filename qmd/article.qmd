@@ -1,0 +1,65 @@
+---
+
+title: "article"
+
+format: html
+
+---
+
+
+
+
+
+# INTRO few sentences here - MAKE SURE TO INTRODUCE DAN HERE
+
+# Research question (included in the first intro paragraph):
+
+How Have Pitch Mixes and Their Effectiveness Evolved Over Time?
+
+# Potential second intro paragraph
+
+---
+
+# DATA EXTRACTION
+
+To begin the analysis on this topic, Dan wrote a webscraper found here (link to webscraper script on Github). This webscaper pulls in all pitch-by-pitch regular season data ranging from 2014 (beginning of the Statcast Era (link the Statcast Era to a wikipedia page or something)) all the way up to the end of the 2024 regular season. Each individual year's worth of data is saved down into its own separate RDS file. These data files are saved down as RDS files due to the fact that (fact check this please) RDS files are stored and processed more efficiently in the R programming language.
+
+TALK A LITTLE BIT MORE ABOUT THE WEBSCRAPER????
+
+
+
+After receiving all of the data from the web, we begun our clean-up process found here (link to 000 script on Github). We first source our script that loads in all of our libraries found here (link to Libraries script on Github).  
+
+---
+
+# FIRST ANALYSIS SECTION
+
+---
+
+# SECOND ANALYSIS SECTION
+
+---
+
+# THIRD ANALYSIS SECTION
+
+---
+
+# FOURTH ANALYSIS SECTION
+
+---
+
+# FIFTH ANALYSIS SECTION
+
+---
+
+# LIMITATIONS
+
+---
+
+# TAKEAWAYS
+
+---
+
+# INCLUDE FINAL LINKS TO LINKEDIN, TWITTER, GITHUB, ETC
+
+![](../plots/Movement-Trends.png)
